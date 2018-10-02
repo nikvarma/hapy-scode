@@ -1,0 +1,106 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left (click)="closeChatBox()">
+      <button ion-button clear>
+        <ion-icon name="arrow-back" class="icon-post-post" showWhen="core,android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      <button ion-item class="header-info" (click)="userProfile()">
+        <ion-avatar item-start>
+          <img [src]="toUserDetails.img" class="userimage" />
+        </ion-avatar>
+        <h2>
+          <span class="label">{{ toUserDetails.name }}</span>
+        </h2>
+        <p>
+          <span class="status" [ngClass]="toUserDetails.status == 'Online'? 'online' : 'offline'">
+            {{ toUserDetails.status }}
+          </span>
+        </p>
+      </button>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button clear icon-only (click)="moreOption($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="bg-white" id="chatboxbody" #chatboxbody>
+  <ion-list class="chat-list">
+    <div class="chatmessagebox chatmessagebox-to">
+      <ion-item item-start class="bg-white chat-item">
+        <ion-avatar item-start (click)="openProfile()">
+          <img [src]="toUserDetails.img">
+        </ion-avatar>
+        <h2 class="chat-tousername">
+          {{ toUserDetails.name }}
+        </h2>
+        <div class="chat-text">
+          This is a sample comment. This is what it will look like on the page when people leave a comment.
+        </div>
+
+      </ion-item>
+    </div>
+
+
+    <div class="chatmessagebox chatmessagebox-me" (press)="onHold()">
+      <ion-item item-start class="bg-white chat-item">
+        <ion-avatar item-start (click)="openProfile()">
+          <img [src]="toUserDetails.img">
+        </ion-avatar>
+
+        <h2 class="chat-tousername">
+          {{ toUserDetails.name }}
+        </h2>
+
+        <div class="chat-text">
+          This is a sample comment. This is what it will look like on the page when people leave a comment.
+        </div>
+
+        <div class="delivertime">
+          <span class="msg-block">
+            <ion-icon class="icon" name="time" small></ion-icon>
+            <span class="text">20 mins</span>
+          </span>
+        </div>
+
+        <div class="deliverstatus">
+          <span class="msg-block">
+            <ion-icon class="icon" name="checkmark-circle-outline" small></ion-icon>
+          </span>
+        </div>
+      </ion-item>
+
+
+      <ul>
+        <li *ngFor="let item of items | async">
+          {{ item | json }}
+        </li>
+      </ul>
+
+    </div>
+  </ion-list>
+  <div class="chat-shawdo"></div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+
+    <ion-buttons left>
+      <button ion-button clear icon-only (click)="shareThings()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-textarea class="message-inputtext-box" type="text" (input)="adjustTextarea($event)" [(ngModel)]="messageTextBox"></ion-textarea>
+    <ion-buttons end>
+      <button [disabled]="textempty" ion-button clear icon-only (click)="sendMessage($event)">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
